@@ -1,8 +1,6 @@
 package ru.kovin.web_app_for_learning_english.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +15,8 @@ import java.util.Collection;
 
 @Data
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +31,9 @@ public class User implements UserDetails {
   private String country;
   private String city;
   private String imgPath;
-  private int points;
-  private int level;
-  private boolean premium;
+  private Integer points;
+  private Integer level;
+  private Boolean premium;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
