@@ -17,7 +17,9 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(path = "/eng_words",
+        produces = "application/json")
+@CrossOrigin(origins = "*")
 public class EngWordController {
 
   private final Logger log = LoggerFactory.getLogger(EngWordController.class);
@@ -28,34 +30,26 @@ public class EngWordController {
     this.engWordRepository = engWordRepository;
   }
 
-  @GetMapping("/eng_words")
+  @GetMapping
   public List<EngWord> all() {
     return engWordRepository.findAll();
   }
 
-  @GetMapping("/eng_words/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<?> one(@PathVariable Long id) {
     Optional<EngWord> engWordOptional = engWordRepository.findById(id);
     return engWordOptional.map(response -> ResponseEntity.ok().body(response))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
-  @PutMapping("/eng_words")
-  ResponseEntity<EngWord> updateEngWord(@Valid @RequestBody EngWord engWord) {
-    log.info("Request to update eng_word: {}", engWord);
-
-    EngWord result = engWordRepository.save(engWord);
-    return ResponseEntity.ok().body(result);
-  }
-
-  @DeleteMapping("/eng_words/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteEngWord(@PathVariable Long id) {
     log.info("Request to delete eng_word: {}", id);
     engWordRepository.deleteById(id);
     return ResponseEntity.ok().build();
   }
 
-  @PostMapping("/eng_words")
+  @PostMapping
   ResponseEntity<EngWord> createEngWord(@Valid @RequestBody EngWord engWord) throws URISyntaxException {
     log.info("Request to create eng_word: {}", engWord);
 

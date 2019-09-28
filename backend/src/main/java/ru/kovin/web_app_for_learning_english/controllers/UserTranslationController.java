@@ -19,7 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(path = "/user_translations",
+        produces = "application/json")
+@CrossOrigin(origins = "*")
 public class UserTranslationController {
   private final Logger log = LoggerFactory.getLogger(EngWordController.class);
 
@@ -35,12 +37,12 @@ public class UserTranslationController {
     this.userRepository = userRepository;
   }
 
-  @GetMapping("/user_translations")
+  @GetMapping
   public List<UserTranslation> all() {
     return userTranslationRepository.findAll();
   }
 
-  @GetMapping("/user_translations/{user_id}/{eng_word_id}")
+  @GetMapping("/{user_id}/{eng_word_id}")
   public ResponseEntity<?> getUserTranslationsOfOneWord(@PathVariable Long user_id, @PathVariable Long eng_word_id) {
     Optional<User> user = userRepository.findById(user_id);
     Optional<EngWord> engWord = engWordRepository.findById(eng_word_id);
@@ -53,7 +55,7 @@ public class UserTranslationController {
   }
 
 
-  @PostMapping("/user_translations")
+  @PostMapping
   ResponseEntity<UserTranslation> createDictionary(@Valid @RequestBody UserTranslation userTranslation)
           throws URISyntaxException {
     log.info("Request to create user_translation: {}", userTranslation);

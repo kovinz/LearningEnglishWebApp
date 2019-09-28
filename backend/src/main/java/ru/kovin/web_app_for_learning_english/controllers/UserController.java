@@ -17,7 +17,9 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(path = "/users",
+        produces = "application/json")
+@CrossOrigin(origins = "*")
 public class UserController {
 
   private final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -28,19 +30,19 @@ public class UserController {
     this.userRepository = userRepository;
   }
 
-  @GetMapping("/users")
+  @GetMapping
   public List<User> all() {
     return userRepository.findAll();
   }
 
-  @GetMapping("/users/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<?> one(@PathVariable Long id) {
     Optional<User> userOptional = userRepository.findById(id);
     return userOptional.map(response -> ResponseEntity.ok().body(response))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
-  @PutMapping("/users")
+  @PutMapping
   ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
     log.info("Request to update user: {}", user);
 
@@ -48,14 +50,14 @@ public class UserController {
     return ResponseEntity.ok().body(result);
   }
 
-  @DeleteMapping("/users/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteUser(@PathVariable Long id) {
     log.info("Request to delete user: {}", id);
     userRepository.deleteById(id);
     return ResponseEntity.ok().build();
   }
 
-  @PostMapping("/users")
+  @PostMapping
   ResponseEntity<User> createUser(@Valid @RequestBody User user) throws URISyntaxException {
     log.info("Request to create user: {}", user);
 

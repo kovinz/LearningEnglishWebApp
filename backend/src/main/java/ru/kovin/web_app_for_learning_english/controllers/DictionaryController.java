@@ -18,7 +18,9 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(path = "/dictionaries",
+        produces = "application/json")
+@CrossOrigin(origins = "*")
 public class DictionaryController {
   private final Logger log = LoggerFactory.getLogger(DictionaryController.class);
 
@@ -30,12 +32,12 @@ public class DictionaryController {
     this.userRepository = userRepository;
   }
 
-  @GetMapping("/dictionaries")
+  @GetMapping
   public List<Dictionary> all() {
     return dictionaryRepository.findAll();
   }
 
-  @GetMapping("/dictionaries/{user_id}")
+  @GetMapping("/{user_id}")
   public ResponseEntity<?> getUserDictionary(@PathVariable Long user_id) {
     Optional<User> user = userRepository.findById(user_id);
     if (user.isEmpty()){
@@ -46,7 +48,7 @@ public class DictionaryController {
   }
 
 
-  @PostMapping("/dictionaries")
+  @PostMapping
   ResponseEntity<Dictionary> createDictionary(@Valid @RequestBody Dictionary dictionary) throws URISyntaxException {
     log.info("Request to create dictionary: {}", dictionary);
 
