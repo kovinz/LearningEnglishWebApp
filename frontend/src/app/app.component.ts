@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {User} from './model/user';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
+
+  title: string;
+  currentUser: User;
+
+  constructor() {
+    this.title = 'Web Portal';
+  }
+
+  public setUser(user: User) {
+    this.currentUser = user;
+  }
+
+  public getUser() {
+    return this.currentUser;
+  }
+
 }
