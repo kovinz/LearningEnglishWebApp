@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
             .authorizeRequests()
-            .antMatchers("/idk")
+            .antMatchers("/idkЁ")
             .access("hasRole('ROLE_USER')")
             .antMatchers("/", "/**").access("permitAll")
 

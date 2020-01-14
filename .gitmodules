@@ -1,0 +1,6 @@
+[submodule "dom4j"]
+	path = dom4j
+	url = https://github.com/dom4j/dom4j
+[submodule "accounts"]
+	path = accounts
+	url = https://github.com/kovinz/Accounts
